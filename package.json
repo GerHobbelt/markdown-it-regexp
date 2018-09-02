@@ -1,17 +1,23 @@
 {
-  "name"          : "@gerhobbelt/markdown-it-regexp",
-  "version"       : "0.4.0-1",
-  "description"   : "plugin that makes regexp replacement simple",
-
-  "author"        : { "name"     : "Alex Kocharin",
-                      "email"    : "alex@kocharin.ru" },
-
-  "repository"    : { "type"     : "git",
-                      "url"      : "git://github.com/rlidwka/markdown-it-regexp" },
-
-  "keywords"      : [ "markdown-it-plugin" ],
-  
-  "publishConfig" : { "registry" : "https://registry.npmjs.org/" },
-
-  "license"       : "MIT"
+  "name": "@gerhobbelt/markdown-it-regexp",
+  "version": "0.4.0-1",
+  "description": "plugin that makes regexp replacement simple",
+  "author": {
+    "name": "Alex Kocharin",
+    "email": "alex@kocharin.ru"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/rlidwka/markdown-it-regexp"
+  },
+  "keywords": [
+    "markdown-it-plugin"
+  ],
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
+  "scripts": {
+    "pub": "npm publish --access public"
+  },
+  "license": "MIT"
 }
