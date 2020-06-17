@@ -1,23 +1,53 @@
 {
   "name": "@gerhobbelt/markdown-it-regexp",
-  "version": "0.4.0-1",
+  "version": "0.5.0-3",
   "description": "plugin that makes regexp replacement simple",
+  "keywords": [
+    "markdown-it-plugin",
+    "markdown-it",
+    "markdown",
+    "regexp",
+    "regex"
+  ],
   "author": {
     "name": "Alex Kocharin",
     "email": "alex@kocharin.ru"
   },
-  "repository": {
-    "type": "git",
-    "url": "git://github.com/rlidwka/markdown-it-regexp"
-  },
-  "keywords": [
-    "markdown-it-plugin"
-  ],
-  "publishConfig": {
-    "registry": "https://registry.npmjs.org/"
+  "repository": "rlidwka/markdown-it-regexp",
+  "license": "MIT",
+  "source": "index.js",
+  "main": "dist/markdownItRegexp.js",
+  "module": "dist/markdownItRegexp.mjs",
+  "engines": {
+    "node": ">=10"
   },
   "scripts": {
+    "build": "make",
+    "test": "make test",
+    "todo": "make todo",
+    "clean": "make clean",
+    "superclean": "make superclean",
+    "doc": "make doc",
+    "lint": "make lint",
+    "lintfix": "make lintfix",
+    "cov": "make report-coverage",
     "pub": "npm publish --access public"
   },
-  "license": "MIT"
+  "devDependencies": {
+    "@gerhobbelt/markdown-it": "11.0.0-36",
+    "@gerhobbelt/markdown-it-testgen": "0.1.6-7",
+    "@gerhobbelt/prepend-header": "1.0.8-3",
+    "camelcase": "6.0.0",
+    "chai": "4.2.0",
+    "cross-env": "7.0.2",
+    "eslint": "7.2.0",
+    "microbundle": "0.12.1",
+    "mocha": "8.0.1",
+    "nyc": "15.1.0"
+  },
+  "reporter": [
+    "lcov",
+    "text",
+    "text-summary"
+  ]
 }

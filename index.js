@@ -1,1 +1,3 @@
-module.exports = require('./lib')
+import Plugin from './lib';
+
+export default Plugin;

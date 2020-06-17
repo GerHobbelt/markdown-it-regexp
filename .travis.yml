@@ -1,8 +1,9 @@
 language: node_js
-
 node_js:
-  - '0.10'
-  - 0.12
-  - 1
-  - 2
-
+ - 'lts/*'
+ - 10
+ - 12
+ - node
+script: npm run build
+sudo: false
+after_success: npm run cov
