@@ -31,18 +31,33 @@
    */
 
   let counter = 0;
+  let registered_ids = [];
   /**
    * Constructor function
    */
 
-  function createPlugin(regexp, replacer) {
+  function createPlugin(regexp, replacer, plugin_id) {
     // clone regexp with all the flags
     let flags = (regexp.global ? 'g' : '') + (regexp.multiline ? 'm' : '') + (regexp.ignoreCase ? 'i' : '');
     regexp = RegExp('^' + regexp.source, flags); // this plugin can be inserted multiple times,
     // so we're generating unique name for it
 
-    let id = 'regexp-' + counter;
-    counter++; // closure var
+    let id = plugin_id;
+
+    if (id && registered_ids['p-' + id]) {
+      throw new Error(`Plugin ID '${id}' has already been registered by another plugin or this plugin is registered multiple times.`);
+    }
+
+    if (!id) {
+      id = 'regexp-' + counter;
+
+      while (registered_ids['p-' + id]) {
+        counter++;
+        id = 'regexp-' + counter;
+      }
+    }
+
+    registered_ids['p-' + id] = true; // closure var
 
     let plugin_options; // return value should be a callable function
     // with strictly defined options passed by markdown-it
