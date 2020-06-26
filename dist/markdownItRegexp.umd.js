@@ -1,4 +1,4 @@
-/*! markdown-it-regexp 0.5.0-4 https://github.com//GerHobbelt/markdown-it-regexp @license MIT */
+/*! markdown-it-regexp 0.5.0-5 https://github.com//GerHobbelt/markdown-it-regexp @license MIT */
 
 (function (global, factory) {
   typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
