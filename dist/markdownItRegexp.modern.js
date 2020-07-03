@@ -13,6 +13,11 @@
  */
 function escape(html) {
   return String(html).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/'/g, '&#39;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+} // code assumes you're wrapping HTML attributes in doublequotes:
+
+function encodeHtmlAttr(value) {
+  // https://stackoverflow.com/questions/4015345/how-do-i-properly-escape-quotes-inside-html-attributes
+  return value.replace(/"/g, '&#34;');
 }
 
 /*!
@@ -47,6 +52,7 @@ let createPlugin = function createPluginF(regexp, config) {
     shouldParse: (state, match) => true,
     postprocessParse: (state, token) => {},
     escape,
+    encodeHtmlAttr,
     regexp
   }, typeof config === 'function' ? {
     replacer: config
