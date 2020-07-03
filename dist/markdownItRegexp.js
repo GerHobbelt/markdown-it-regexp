@@ -49,7 +49,7 @@ function transformRegExpToOnlyMatchFromStart(regexp) {
 
 let createPlugin = function createPluginF(regexp, config) {
   regexp = transformRegExpToOnlyMatchFromStart(regexp);
-  config = Object.assign({
+  config = Object.assign({}, {
     setup: (setup, config) => config,
     shouldParse: (state, match) => true,
     postprocessParse: (state, token) => {},
