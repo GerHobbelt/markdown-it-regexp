@@ -199,6 +199,24 @@ describe('basics', () => {
 
     assert.strictEqual(html, '<p>hello foo:user1:bar:BLETCH and foo:user2:bar:---</p>\n');
   });
+
+  it('make sure compound regexes do not cause trouble by matching anywhere in the input', () => {
+    let html = Md()
+    .use(createPlugin(
+      /@(\w+)|!(.)/,      // <-- reduced version of the OR-bar regex which was used in markdown-it-wikilinks and which triggered the bug
+
+      {
+        replacer: function (match, setup, options, env, tokens, id) {
+          let url = (match[1] || 'x') + '!' + (match[2] || 'y');
+
+          return options.opt1 + ':' + url + ':' + options.opt2;
+        }
+      }
+    ), { opt1: '+', opt2: '+' })
+    .render('hello @user1!a!bang and @user2!b !c');
+
+    assert.strictEqual(html, '<p>hello +:user1!y:++:x!a:++:x!b:+ang and +:user2!y:++:x!b:+ +:x!c:+</p>\n');
+  });
 });
 
 

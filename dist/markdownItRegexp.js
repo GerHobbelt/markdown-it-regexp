@@ -29,10 +29,12 @@ function escape(html) {
 let counter = 0;
 let registered_ids = [];
 
-function cloneRegExp(regexp) {
+function transformRegExpToOnlyMatchFromStart(regexp) {
   // clone regexp with all the flags
-  let flags = (regexp.global ? 'g' : '') + (regexp.multiline ? 'm' : '') + (regexp.ignoreCase ? 'i' : '') + (regexp.unicode ? 'u' : '') + (regexp.sticky ? 'y' : '');
-  regexp = RegExp('^' + regexp.source, flags);
+  let flags = (regexp.global ? 'g' : '') + (regexp.multiline ? 'm' : '') + (regexp.ignoreCase ? 'i' : '') + (regexp.unicode ? 'u' : '') + (regexp.sticky ? 'y' : ''); // make sure compound / erroneous(!) regexes are transformed to ALWAYS only match from the start of the input:
+  // (f.e.: before this, markdown-it-wikilinks exhibited some very duplication-like behaviour)
+
+  regexp = RegExp('^(?:' + regexp.source + ')', flags);
   return regexp;
 }
 /**
@@ -41,7 +43,7 @@ function cloneRegExp(regexp) {
 
 
 let createPlugin = function createPluginF(regexp, config) {
-  regexp = cloneRegExp(regexp);
+  regexp = transformRegExpToOnlyMatchFromStart(regexp);
   config = Object.assign({
     setup: (setup, config) => config,
     shouldParse: (state, match) => true,
@@ -94,7 +96,14 @@ let createPlugin = function createPluginF(regexp, config) {
 
   let handler = function cbHandler(md, options) {
     // store use(..., options) in closure
-    plugin_options = config.setup(config, options); // register plugin with markdown-it
+    plugin_options = config.setup(config, options); // when user has provided another regex via `setup()`,
+    // then we MUST clone that one to ensure it only matches
+    // from the start of the input:
+
+    if (regexp.source !== config.regexp.source) {
+      regexp = config.regexp = transformRegExpToOnlyMatchFromStart(config.regexp);
+    } // register plugin with markdown-it
+
 
     let id = config.pluginId;
     md.inline.ruler.push(id, parse);
@@ -103,7 +112,7 @@ let createPlugin = function createPluginF(regexp, config) {
 
   function parse(state, silent) {
     // slowwww... maybe use an advanced regexp engine for this
-    let match = config.regexp.exec(state.src.slice(state.pos));
+    const match = config.regexp.exec(state.src.slice(state.pos));
     if (!match) return false;
 
     if (!config.shouldParse(state, match, config, plugin_options)) {
@@ -115,8 +124,9 @@ let createPlugin = function createPluginF(regexp, config) {
     } // valid match found, now we need to advance cursor
 
 
-    let originalPos = state.pos;
-    state.pos += match[0].length; // don't insert any tokens in silent mode
+    const originalPos = state.pos;
+    const matchlen = match[0].length;
+    state.pos += matchlen; // don't insert any tokens in silent mode
 
     if (silent) return true;
     let token = state.push(id, '', 0);
@@ -124,7 +134,7 @@ let createPlugin = function createPluginF(regexp, config) {
       match: match
     };
     token.position = originalPos;
-    token.size = match[0].length;
+    token.size = matchlen;
     config.postprocessParse(state, token, config, plugin_options);
     return true;
   }
