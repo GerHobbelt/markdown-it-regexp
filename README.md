@@ -70,6 +70,23 @@ we now provide a setup object with these members:
      
   The `replacer` function is invoked by the MarkdownIt render process and must return a (HTML) string representing the given `match` in the HTML output.
 
+- `setup`: (optional) function which will be invoked when the `markdownIt.use(...)` API is invoked for the created plugin.
+
+  Return the `options` object from markdown_it `.use(plugin_func, options)` API call or an augmented clone, which will be used by the plugin code.
+
+  The default `setup` function and its call site look like this:
+
+  ```js
+    // default callback spec:
+    setup: (config, options) => options,
+    ...
+
+  // setup callback is called like this:
+  plugin_options = config.setup(config, options);
+  ```
+
+  Indeed, the `options` object returned by `setup()` function will be passed to the other callbacks as `plugin_options`.
+
 - `shouldParse`: (optional) function which is invoked immediately after matching the regexp-to-match, but *before* a token is produced.
     
   Return FALSE when you want to ignore this match, TRUE when the code should continue as is.
@@ -189,12 +206,19 @@ The process flow is as follows:
 - Then, when the entire `.parse()` has completed, at some point the `MarkdownIt.render` action will be started.
     
 - When this render process encounters a token of the matching type for this plugin (`config.pluginId`), the `replacer` method is invoked to turn the token into a chunk of HTML, which will be added to the render output.
-Hence the order in whicch the setup elements are accessed by MarkdownIt is:
+Hence the order in which the setup elements are accessed by MarkdownIt is:
 
 - regexp
 - `shouldParse`
 - `postprocessParse`
 - `replacer`
+
+
+### Setup/Init Process Flow
+
+The `setup.setup` callback is invoked when userland code executes the `md.use(plugin, ...)` statement.
+
+At that time, you may still safely adjust some setup/config parameters.
 
     
       

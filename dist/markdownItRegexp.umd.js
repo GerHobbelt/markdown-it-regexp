@@ -41,6 +41,7 @@
     let flags = (regexp.global ? 'g' : '') + (regexp.multiline ? 'm' : '') + (regexp.ignoreCase ? 'i' : '') + (regexp.unicode ? 'u' : '') + (regexp.sticky ? 'y' : '');
     regexp = RegExp('^' + regexp.source, flags);
     config = Object.assign({
+      setup: (setup, config) => config,
       shouldParse: (state, match) => true,
       postprocessParse: (state, token) => {},
       escape
@@ -58,6 +59,10 @@
 
     if (typeof config.postprocessParse !== 'function') {
       throw new Error('createPlugin(re, config): config.postprocessParse MUST be a function.');
+    }
+
+    if (typeof config.setup !== 'function') {
+      throw new Error('createPlugin(re, config): config.setup MUST be a function.');
     } // this plugin can be inserted multiple times,
     // so we're generating unique name for it
 
@@ -86,7 +91,7 @@
 
     let handler = function cbHandler(md, options) {
       // store use(..., options) in closure
-      plugin_options = options; // register plugin with markdown-it
+      plugin_options = config.setup(config, options); // register plugin with markdown-it
 
       let id = config.pluginId;
       md.inline.ruler.push(id, parse);
