@@ -1,4 +1,4 @@
-/*! markdown-it-regexp 0.6.0-9 https://github.com//GerHobbelt/markdown-it-regexp @license MIT */
+/*! markdown-it-regexp 0.6.0-10 https://github.com//GerHobbelt/markdown-it-regexp @license MIT */
 
 'use strict';
 
