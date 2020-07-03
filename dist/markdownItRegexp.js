@@ -28,19 +28,26 @@ function escape(html) {
 
 let counter = 0;
 let registered_ids = [];
+
+function cloneRegExp(regexp) {
+  // clone regexp with all the flags
+  let flags = (regexp.global ? 'g' : '') + (regexp.multiline ? 'm' : '') + (regexp.ignoreCase ? 'i' : '') + (regexp.unicode ? 'u' : '') + (regexp.sticky ? 'y' : '');
+  regexp = RegExp('^' + regexp.source, flags);
+  return regexp;
+}
 /**
  * Constructor function
  */
 
+
 let createPlugin = function createPluginF(regexp, config) {
-  // clone regexp with all the flags
-  let flags = (regexp.global ? 'g' : '') + (regexp.multiline ? 'm' : '') + (regexp.ignoreCase ? 'i' : '') + (regexp.unicode ? 'u' : '') + (regexp.sticky ? 'y' : '');
-  regexp = RegExp('^' + regexp.source, flags);
+  regexp = cloneRegExp(regexp);
   config = Object.assign({
     setup: (setup, config) => config,
     shouldParse: (state, match) => true,
     postprocessParse: (state, token) => {},
-    escape
+    escape,
+    regexp
   }, typeof config === 'function' ? {
     replacer: config
   } : config);
@@ -96,7 +103,7 @@ let createPlugin = function createPluginF(regexp, config) {
 
   function parse(state, silent) {
     // slowwww... maybe use an advanced regexp engine for this
-    let match = regexp.exec(state.src.slice(state.pos));
+    let match = config.regexp.exec(state.src.slice(state.pos));
     if (!match) return false;
 
     if (!config.shouldParse(state, match, config, plugin_options)) {
