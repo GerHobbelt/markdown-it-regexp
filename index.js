@@ -1,3 +1,3 @@
-import Plugin from './lib';
+import Plugin from './lib/index.js';
 
 export default Plugin;

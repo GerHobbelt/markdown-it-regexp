@@ -1,6 +1,6 @@
-const assert = require('assert');
-const md = require('@gerhobbelt/markdown-it');
-const createPlugin = require('../' /* '@gerhobbelt/markdown-it-regexp' */);
+import assert from 'assert';
+import md from '@gerhobbelt/markdown-it';
+import createPlugin from '../index.js';
 
 // separate the setup/config object from the `md.use(...)` call for code clarity:
 const setup = {

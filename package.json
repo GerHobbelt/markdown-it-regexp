@@ -15,11 +15,11 @@
   },
   "repository": "rlidwka/markdown-it-regexp",
   "license": "MIT",
+  "type": "module",
   "source": "index.js",
   "main": "dist/markdownItRegexp.js",
-  "module": "dist/markdownItRegexp.mjs",
   "engines": {
-    "node": ">=10"
+    "node": ">=12.20.0"
   },
   "scripts": {
     "build": "make",
@@ -33,21 +33,23 @@
     "cov": "make report-coverage",
     "pub": "npm publish --access public"
   },
+  "publishConfig": {
+    "access": "public"
+  },
   "devDependencies": {
-    "@gerhobbelt/markdown-it": "11.0.1-41",
-    "@gerhobbelt/markdown-it-testgen": "0.1.6-8",
-    "@gerhobbelt/prepend-header": "1.0.8-3",
-    "camelcase": "6.0.0",
-    "chai": "4.2.0",
-    "cross-env": "7.0.2",
-    "eslint": "7.3.1",
-    "microbundle": "0.12.2",
-    "mocha": "8.0.1",
+    "@gerhobbelt/markdown-it": "12.0.4-51",
+    "@gerhobbelt/markdown-it-testgen": "0.1.6-17",
+    "@gerhobbelt/prepend-header": "1.1.0-7",
+    "cross-env": "7.0.3",
+    "eslint": "7.18.0",
+    "microbundle": "0.13.0",
+    "mocha": "8.2.1",
     "nyc": "15.1.0"
   },
   "reporter": [
     "lcov",
     "text",
+    "html",
     "text-summary"
   ]
 }

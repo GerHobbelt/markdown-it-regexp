@@ -1,8 +1,9 @@
 /* eslint-env mocha, es6 */
 
-const assert = require('assert');
-const Md = require('@gerhobbelt/markdown-it');
-const createPlugin = require('../');
+import assert from 'assert';
+import Md from '@gerhobbelt/markdown-it';
+import createPlugin from '../index.js';
+
 
 describe('basics', () => {
   it('example from README', () => {

@@ -1,7 +1,5 @@
 /*! markdown-it-regexp 0.6.0-12 https://github.com//GerHobbelt/markdown-it-regexp @license MIT */
 
-'use strict';
-
 /*!
  * markdown-it-regexp
  * Copyright (c) 2014 Alex Kocharin
@@ -157,5 +155,5 @@ createPlugin.reset = function () {
   registered_ids = [];
 };
 
-module.exports = createPlugin;
-//# sourceMappingURL=markdownItRegexp.js.map
+export default createPlugin;
+//# sourceMappingURL=markdownItRegexp.modern.js.map
