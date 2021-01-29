@@ -195,7 +195,7 @@ demoPlugin:foo:https://twitter.com/user21:bar:BLETCH:demoPlugin:0:0.</p>
 The process flow is as follows:
     
 - MarkdownIt attempts to to match every "inline" code chunk to the given regexp-to-match.
-- when a match occurs, `shouldParse()` is called to help decide whether the match should be come a token or not (skipping it and keeping it part of the regular inline text block).
+- when a match occurs, `shouldParse()` is called to help decide whether the match should become a token or not (skipping it and keeping it part of the regular inline text block).
     
 - When the token has been created and added to the token stream (the match is stored in `token.meta.match`, not in `Token.content`!)
   `postprocessMatch` is invoked to allow the plugin programmer last minute access to the token, before parsing continues.
