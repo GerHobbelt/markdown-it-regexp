@@ -37,13 +37,13 @@
     "access": "public"
   },
   "devDependencies": {
-    "@gerhobbelt/markdown-it": "12.0.4-51",
+    "@gerhobbelt/markdown-it": "12.0.6-54",
     "@gerhobbelt/markdown-it-testgen": "0.1.6-17",
     "@gerhobbelt/prepend-header": "1.1.0-7",
     "cross-env": "7.0.3",
-    "eslint": "7.18.0",
-    "microbundle": "0.13.0",
-    "mocha": "8.2.1",
+    "eslint": "7.29.0",
+    "microbundle": "0.13.3",
+    "mocha": "9.0.1",
     "nyc": "15.1.0"
   },
   "reporter": [
