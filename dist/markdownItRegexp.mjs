@@ -34,7 +34,7 @@ let registered_ids = [];
 
 function transformRegExpToOnlyMatchFromStart(regexp) {
   // clone regexp with all the flags
-  let flags = (regexp.global ? 'g' : '') + (regexp.multiline ? 'm' : '') + (regexp.ignoreCase ? 'i' : '') + (regexp.unicode ? 'u' : '') + (regexp.sticky ? 'y' : ''); // make sure compound / erroneous(!) regexes are transformed to ALWAYS only match from the start of the input:
+  const flags = (regexp.global ? 'g' : '') + (regexp.multiline ? 'm' : '') + (regexp.ignoreCase ? 'i' : '') + (regexp.unicode ? 'u' : '') + (regexp.sticky ? 'y' : ''); // make sure compound / erroneous(!) regexes are transformed to ALWAYS only match from the start of the input:
   // (f.e.: before this, markdown-it-wikilinks exhibited some very duplication-like behaviour)
 
   regexp = RegExp('^(?:' + regexp.source + ')', flags);
@@ -45,12 +45,14 @@ function transformRegExpToOnlyMatchFromStart(regexp) {
  */
 
 
-let createPlugin = function createPluginF(regexp, config) {
+const createPlugin = function createPluginF(regexp, config) {
   regexp = transformRegExpToOnlyMatchFromStart(regexp);
   config = Object.assign({}, {
     setup: (setup, config) => config,
     shouldParse: (state, match) => true,
-    postprocessParse: (state, token) => {},
+    postprocessParse: (state, token) => {
+      /* empty */
+    },
     escape,
     encodeHtmlAttr,
     regexp
@@ -98,7 +100,7 @@ let createPlugin = function createPluginF(regexp, config) {
   let plugin_options; // return value should be a callable function
   // with strictly defined options passed by markdown-it
 
-  let handler = function cbHandler(md, options) {
+  const handler = function cbHandler(md, options) {
     // store use(..., options) in closure
     plugin_options = config.setup(config, options); // when user has provided another regex via `setup()`,
     // then we MUST clone that one to ensure it only matches
@@ -109,7 +111,7 @@ let createPlugin = function createPluginF(regexp, config) {
     } // register plugin with markdown-it
 
 
-    let id = config.pluginId;
+    const id = config.pluginId;
     md.inline.ruler.push(id, parse);
     md.renderer.rules[id] = render;
   };
@@ -133,7 +135,7 @@ let createPlugin = function createPluginF(regexp, config) {
     state.pos += matchlen; // don't insert any tokens in silent mode
 
     if (silent) return true;
-    let token = state.push(id, '', 0);
+    const token = state.push(id, '', 0);
     token.meta = {
       match: match
     };
@@ -156,4 +158,4 @@ createPlugin.reset = function () {
 };
 
 export default createPlugin;
-//# sourceMappingURL=markdownItRegexp.modern.js.map
+//# sourceMappingURL=markdownItRegexp.mjs.map

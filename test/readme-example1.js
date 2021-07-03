@@ -8,7 +8,7 @@ const plugin = createPlugin(
 
   // this function will be called when something matches
   function (match, setup, options) {
-    let url = 'http://example.org/u/' + match[1];
+    const url = 'http://example.org/u/' + match[1];
 
     return '<a href="' + setup.escape(url) + '">'
          + setup.escape(match[1])
@@ -16,7 +16,7 @@ const plugin = createPlugin(
   }
 );
 
-let html = md()
+const html = md()
   .use(plugin /* , options */)
   .render('hello @user');
 

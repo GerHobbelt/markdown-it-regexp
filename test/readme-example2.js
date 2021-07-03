@@ -6,8 +6,8 @@ import createPlugin from '../index.js';
 const setup = {
   pluginId: 'demoPlugin',
   replacer: function (match, setup, options, env, tokens, id) {
-    let url = 'https://twitter.com/' + match[1];
-    let token = tokens[id];
+    const url = 'https://twitter.com/' + match[1];
+    const token = tokens[id];
 
     // - showcase using the `options` passed in via `MarkdownIt.use()`
     // - showcase using the `setup` object
@@ -35,7 +35,7 @@ const plugin = createPlugin(
   setup
 );
 
-let engine = md()
+const engine = md()
   .use(
     plugin,
 

@@ -7,12 +7,12 @@ import createPlugin from '../index.js';
 
 describe('basics', () => {
   it('example from README', () => {
-    let html = Md()
+    const html = Md()
     .use(createPlugin(
       /@(\w+)/,
 
       function (match, setup, options) {
-        let url = 'http://example.org/u/' + match[1];
+        const url = 'http://example.org/u/' + match[1];
 
         return '<a href="' + setup.escape(url) + '">'
              + setup.escape(match[1])
@@ -28,12 +28,12 @@ describe('basics', () => {
     // make sure plugin ID autocount restarts: independence of the other tests!
     createPlugin.reset();
 
-    let html = Md()
+    const html = Md()
     .use(createPlugin(
       /@(\w+)/,
 
       function (match, setup, options) {
-        let url = match[1];
+        const url = match[1];
 
         return setup.pluginId + ':' + options.opt1 + ':' + setup.escape(url) + ':' + options.opt2;
       }
@@ -47,12 +47,12 @@ describe('basics', () => {
     // make sure plugin ID autocount restarts: independence of the other tests!
     createPlugin.reset();
 
-    let html = Md()
+    const html = Md()
     .use(createPlugin(
       /@(\w+)/,
 
       function (match, setup, options) {
-        let url = match[1];
+        const url = match[1];
 
         return setup.pluginId + ':' + options.opt1 + ':' + setup.escape(url) + ':' + options.opt2;
       }
@@ -61,7 +61,7 @@ describe('basics', () => {
       /#(\w+)/,
 
       function (match, setup, options) {
-        let url = match[1];
+        const url = match[1];
 
         return setup.pluginId + ':' + options.opt2 + ':' + setup.escape(url) + ':' + options.opt1;
       }
@@ -75,12 +75,12 @@ describe('basics', () => {
     // make sure plugin ID autocount restarts: independence of the other tests!
     createPlugin.reset();
 
-    let html = Md()
+    const html = Md()
     .use(createPlugin(
       /@(\w+)/,
 
       function (match, setup, options, env) {
-        let url = match[1];
+        const url = match[1];
 
         // comms via ENV:
         env.communications = 42;
@@ -92,7 +92,7 @@ describe('basics', () => {
       /#(\w+)/,
 
       function (match, setup, options, env) {
-        let url = match[1];
+        const url = match[1];
 
         assert.strictEqual(env.communications, 42);
 
@@ -105,12 +105,12 @@ describe('basics', () => {
   });
 
   it('render method should receive a token reference from markdown_it which carries position info', () => {
-    let html = Md()
+    const html = Md()
     .use(createPlugin(
       /@(\w+)/,
 
       function (match, setup, options, env, tokens, id, render_options) {
-        let url = match[1];
+        const url = match[1];
 
         assert(Array.isArray(tokens));
         assert(typeof id === 'number');
@@ -119,7 +119,7 @@ describe('basics', () => {
         assert(typeof render_options === 'object');
         assert(render_options);
 
-        let token = tokens[id];
+        const token = tokens[id];
 
         return options.opt1 + ':' + setup.escape(url) + ':' + options.opt2 + ':' + token.position + ':' + token.size;
       }
@@ -130,18 +130,18 @@ describe('basics', () => {
   });
 
   it('plugin can set its own token type ID', () => {
-    let html = Md()
+    const html = Md()
     .use(createPlugin(
       /@(\w+)/,
 
       {
         replacer: function (match, setup, options, env, tokens, id) {
-          let url = match[1];
+          const url = match[1];
 
           assert(Number.isFinite(id));
           assert(id >= 0);
 
-          let token = tokens[id];
+          const token = tokens[id];
 
           return options.opt1 + ':' + setup.escape(url) + ':' + options.opt2 + ':' + token.type + ':' + token.nesting + ':' + token.level;
         },
@@ -155,13 +155,13 @@ describe('basics', () => {
   });
 
   it('the shouldParse setup parameter should work as intended', () => {
-    let html = Md()
+    const html = Md()
     .use(createPlugin(
       /@(\w+)/,
 
       {
         replacer: function (match, setup, options) {
-          let url = match[1];
+          const url = match[1];
 
           return setup.pluginId + ':' + options.opt1 + ':' + setup.escape(url) + ':' + options.opt2;
         },
@@ -177,14 +177,14 @@ describe('basics', () => {
   });
 
   it('the postprocessParse setup parameter should work as intended', () => {
-    let html = Md()
+    const html = Md()
     .use(createPlugin(
       /@(\w+)/,
 
       {
         replacer: function (match, setup, options, env, tokens, id) {
-          let url = match[1];
-          let token = tokens[id];
+          const url = match[1];
+          const token = tokens[id];
 
           return options.opt1 + ':' + setup.escape(url) + ':' + options.opt2 + ':' + (token.wonko || '---');
         },
@@ -202,13 +202,13 @@ describe('basics', () => {
   });
 
   it('make sure compound regexes do not cause trouble by matching anywhere in the input', () => {
-    let html = Md()
+    const html = Md()
     .use(createPlugin(
       /@(\w+)|!(.)/,      // <-- reduced version of the OR-bar regex which was used in markdown-it-wikilinks and which triggered the bug
 
       {
         replacer: function (match, setup, options, env, tokens, id) {
-          let url = (match[1] || 'x') + '!' + (match[2] || 'y');
+          const url = (match[1] || 'x') + '!' + (match[2] || 'y');
 
           return options.opt1 + ':' + url + ':' + options.opt2;
         }

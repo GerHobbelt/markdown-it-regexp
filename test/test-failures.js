@@ -22,7 +22,7 @@ describe('intended failures', () => {
     // make sure plugin ID autocount restarts: independence of the other tests!
     createPlugin.reset();
 
-    let html = Md()
+    const html = Md()
     .use(createPlugin(
       /@(\w+)/,
 
@@ -46,7 +46,7 @@ describe('intended failures', () => {
   }, /has already been registered/);
 
   itFails('plugin should barf when replacer function is not defined', () => {
-    let html = Md()
+    const html = Md()
     .use(createPlugin(
       /@(\w+)/,
 
@@ -55,7 +55,7 @@ describe('intended failures', () => {
   }, /config\.replacer MUST be a replacer function/);
 
   itFails('plugin should barf when replacer function is not defined in advanced setup', () => {
-    let html = Md()
+    const html = Md()
     .use(createPlugin(
       /@(\w+)/,
 
@@ -67,24 +67,24 @@ describe('intended failures', () => {
   }, /config\.replacer MUST be a replacer function/);
 
   itFails('plugin should barf at setup time when shouldParse is not a function', () => {
-    let html = Md()
+    const html = Md()
     .use(createPlugin(
       /@(\w+)/,
 
       {
-        replacer: () => {},
+        replacer: () => { /* empty */ },
         shouldParse: true
       }
     ));
   }, /config\.shouldParse MUST be a function/);
 
   itFails('plugin should barf at setup time when postprocessParse is not a function', () => {
-    let html = Md()
+    const html = Md()
     .use(createPlugin(
       /@(\w+)/,
 
       {
-        replacer: () => {},
+        replacer: () => { /* empty */ },
         postprocessParse: true
       }
     ));
@@ -94,7 +94,7 @@ describe('intended failures', () => {
     // make sure plugin ID autocount restarts: independence of the other tests!
     createPlugin.reset();
 
-    let html = Md({
+    const html = Md({
       linkify: true,
       highSecurity: false,
 

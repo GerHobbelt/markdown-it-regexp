@@ -7,12 +7,12 @@ import createPlugin from '../index.js';
 
 describe('helpers', () => {
   it('escape() encodes any URI', () => {
-    let md = Md()
+    const md = Md()
     .use(createPlugin(
       /@([^\s]+)/,
 
       function (match, setup, options) {
-        let url = 'http://example.org/u/' + match[1];
+        const url = 'http://example.org/u/' + match[1];
 
         return '<a href="X">'
              + setup.escape(match[1])
@@ -36,12 +36,12 @@ describe('helpers', () => {
   });
 
   it('encodeHtmlAttr() encodes any HTML attribute value', () => {
-    let md = Md()
+    const md = Md()
     .use(createPlugin(
       /@([^\s]+)/,
 
       function (match, setup, options) {
-        let url = 'http://example.org/u/' + match[1];
+        const url = 'http://example.org/u/' + match[1];
 
         return '<a href="' + setup.encodeHtmlAttr(url) + '">'
              + setup.escape(match[1])

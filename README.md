@@ -1,5 +1,9 @@
 # markdown-it-regexp
 
+[![Node.js CI](https://github.com/GerHobbelt/markdown-it-regexp/actions/workflows/node.js.yml/badge.svg)](https://github.com/GerHobbelt/markdown-it-regexp/actions/workflows/node.js.yml)
+![CircleCI](https://img.shields.io/circleci/build/github/GerHobbelt/markdown-it-regexp)
+[![NPM version](https://img.shields.io/npm/v/@gerhobbelt/markdown-it-regexp.svg?style=flat)](https://www.npmjs.org/package/@gerhobbelt/markdown-it-regexp)
+
 **THis is fork version of https://github.com/rlidwka/markdown-it-regexp**
 
 Make simple [markdown-it](https://github.com/markdown-it/markdown-it) plugins easier.
